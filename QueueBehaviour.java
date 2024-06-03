@@ -1,12 +1,15 @@
+package oop.OOP2;
+
+
 public interface QueueBehaviour {
 
-    void takeInQueue(Actor actor);
+    void takeInQueue(Actor actor);// встал в очередь
 
-    void takeOrders();// сделать заказ
+    void takeOrders(Actor actor);// сделал заказ
 
-    void giveOrders();// забрать заказы
+    void giveOrders(Actor actor);// забрал заказ
 
-    void releaseFromQueue();// выйти из очереди
+    void releaseFromQueue();// вышел из очереди
     
 
     

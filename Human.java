@@ -1,3 +1,5 @@
+package oop.OOP2;
+
 public class Human extends Actor {
 
     public Human(String name) {
@@ -5,13 +7,13 @@ public class Human extends Actor {
     }
 
     @Override
-    public void setMakeOrder(boolean fag) {
-        this.isMakeOrder = fag;
+    public void setMakeOrder(boolean flag) {
+        this.isMakeOrder = flag;
     }
 
     @Override
-    public void setTakeOrder(boolean fag) {
-        this.isTakeOrder = fag;
+    public void setTakeOrder(boolean flag) {
+        this.isTakeOrder = flag;
     }
 
     @Override
@@ -27,6 +29,12 @@ public class Human extends Actor {
     @Override
     public String getName() {
         return name;
+    }
+
+    @Override
+    public String toString() {
+        
+        return this.getName();
     }
 
 }

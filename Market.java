@@ -1,4 +1,7 @@
+package oop.OOP2;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 // Реализовать класс Market и
@@ -15,48 +18,105 @@ import java.util.List;
 
 public class Market implements MarketBehaviour, QueueBehaviour{
 
-    private List<Actor> actors = new ArrayList<Actor>();
+    private List<Actor> actors = new ArrayList<>();
+    private HashMap<Actor,Integer> visitors = new HashMap<>();
+    
+
+    
 
     @Override
-    public void acceptToMarket(Actor actor) {
-        actors.add(actor);
+    public void acceptToMarket(Actor vivsitor) {
+        if(visitors.get(vivsitor)!= null){
+            visitors.put(vivsitor,visitors.get(vivsitor)+1);}
+        else{
+        visitors.put(vivsitor, 1);
+       }
+    
     }
 
     @Override
-    public void releaseFromMarket(List<Actor> actors) {
-        actors.remove(0);
+    public void releaseFromMarket(Actor visitor) {
+        visitor.setMakeOrder(false);
+        visitor.setTakeOrder(false);
+        visitors.put(visitor, visitors.get(visitor)-1);
+        if (visitors.get(visitor)<=0){
+            visitors.remove(visitor);
+        }
+    }
+
+
+
+
+
+    @Override
+    public void update (Actor actor) {
+        String str = String.format("%s сделал заказ = %b, забрал заказ = %b",actor, actor.isMakeOrder, actor.isTakeOrder);
+        System.out.println(str);
+    
+        
+    }
+
+
+    @Override
+    public void takeInQueue(Actor actor) {
+        actor.setMakeOrder(false);
+        actor.setTakeOrder(false);
+        if (visitors.containsKey(actor))
+        {
+            releaseFromMarket(actor);
+            actors.add(actor);
+    }
+        else{
+            System.out.println(actor+" Вы не зашли в магазин, чтобы встать в очередь, продолжайте наслаждаться вывеской");
+        }
+
+        
+        
     }
 
     @Override
-    public void update(int x) {
+    public void takeOrders(Actor actor) {
+        if (actors.isEmpty()){
+            System.out.println("Нет посетителей в магазине");
         
-        // добавить аргумент
-        // создать список прордуктов
-        // либо удалять либо 
-        
-    }
+        } 
+        if (actors.get(0)==actor ){
+            actor.setMakeOrder(true);
+            return;
+            
+
+        }
+        else{
+            System.out.println(actor + " Вы лезете без очереди");
+        }
+
+
+        }
 
     @Override
-    public void giveOrders() {
-        // TODO Auto-generated method stub
-        
+    public void giveOrders(Actor actor) {
+       if (actors.get(0) == actor && actor.isMakeOrder == true){
+            actor.setTakeOrder(true);
+            acceptToMarket(actor);
+            releaseFromQueue();
+       }else
+       {
+        System.out.println(actor + " Займите очередь и сделайте заказ");}
     }
 
     @Override
     public void releaseFromQueue() {
-        // TODO Auto-generated method stub
-        
+        actors.remove(0);
+    
     }
 
-    @Override
-    public void takeInQueue(Actor actor) {
-        // TODO Auto-generated method stub
-        
-    }
+    
 
     @Override
-    public void takeOrders() {
-        // берём первый заказ из списка и удалить его
+    public void show() {
+        System.out.println("Наша очередь: " + actors);
+        System.out.println("Наши посетители: " + visitors);
+    }
         
     }
 
@@ -64,4 +124,3 @@ public class Market implements MarketBehaviour, QueueBehaviour{
 
 
 
-}

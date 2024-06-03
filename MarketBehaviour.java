@@ -1,11 +1,15 @@
+package oop.OOP2;
+
 import java.util.List;
 
 public interface MarketBehaviour {
 
     void acceptToMarket(Actor actor);//входит в магазин
 
-    void releaseFromMarket(List<Actor> actors);//выходит из магазина
+    void releaseFromMarket(Actor actor);//выходит из магазина
 
-    void update(int x);//обновление состояиния магазина
+    void update(Actor actor);//обновление состояния магазина
+
+    void show();
 
 }
